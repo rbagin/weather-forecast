@@ -9,21 +9,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app"></div>
-    <script>getCoords()</script>
-
     <div class='box'>
         <div class='wave -one'></div>
-        <!-- <div class='wave -two'></div>
-        <div class='wave -three'></div> -->
+        <div class='wave -two'></div>
+        <div class='wave -three'></div>
         <div class="weathercon"><i class='fas fa-sun' style='color: #d36326;'></i></div>
         <div class="info">
           <h2 class="location">SUNNYVILLE</h2>
-          <p class="date">MONDAY | SEP 12 | 12:34</p>
-          <h1 class="temp">25 &deg;C</h1>
+          <p class="date" id="date">MONDAY | SEP 12 | 12:34</p>
+          <h1 class="temp" id="temperature">25 &deg;C</h1>
+          <h2 class="conditions">Sunny</h2>
         </div>
       </div>
       <span>Enable location to see yours! :)</span>
 
+    <script>getCoords()</script>
 </body>
 </html>

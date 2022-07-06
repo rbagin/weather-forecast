@@ -11,21 +11,25 @@ const getCoords = () => {
     )
       .then((resp) => resp.json())
       .then((forecast) => {
-        const weatherTemp = forecast.weather.map((condition) => condition.main);
+        const weatherConditions = forecast.weather.map((condition) => ({
+          title: condition.main,
+          description: condition.description,
+        }));
         return {
           temperature: forecast.main.temp,
-          conditions: weatherTemp,
+          conditions: weatherConditions,
         };
       })
       .then((weather) => {
-        const weatherReport = `<div>${kelvinToCelcius(
-          weather.temperature
-        )}</div>
-    <div>${weather.conditions
-      .map((condition) => `<span>${condition}</span>`)
-      .join(" ")}</div>`;
-        const appElem = document.getElementById("app");
-        appElem.innerHTML = weatherReport;
+        const dateElem = document.getElementById("date");
+        const tempElem = document.getElementById("temperature");
+        const conditionsElem = document.getElementById("conditions");
+        const temperature = kelvinToCelcius(weather.temperature).toFixed(1);
+        // set the contents
+        tempElem.innerText = `${temperature} ºC`;
+        dateElem.innerText = dateString("sk-SK");
+        debugger;
+        conditionsElem.innerHTML = conditionsString(weather.conditions);
       });
   };
   navigator.geolocation.getCurrentPosition(success);
@@ -44,4 +48,16 @@ const dateString = (locale) => {
   };
   return new Date().toLocaleDateString(locale, options);
 };
-console.log(kelvinToCelcius(299));
+
+const conditionsString = (conditions) => {
+  const str = conditions
+    .map(
+      (condition) => `
+    <div>
+      <span class="condition-title">${condition.title}</span>
+      <span class="condition-desc">${condition.description}</span>
+    </div>`
+    )
+    .join(" ");
+  return `<div>${str}</div>`;
+};
