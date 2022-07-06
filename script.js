@@ -9,22 +9,9 @@ const getCoords = async () => {
     const latitude = obj.coords.latitude;
     const longitude = obj.coords.longitude;
 
-    const weatherObj = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIkey}`
-    ).then((response) => response.json());
-    const weatherConditions = weatherObj.weather.map((condition) => ({
-      title: condition.main,
-      description: condition.description,
-    }));
-    const weather = {
-      temperature: weatherObj.main.temp,
-      conditions: weatherConditions,
-    };
-
-    const addressObj = await fetch(
-      `https://us1.locationiq.com/v1/reverse?key=${geoCodingKey}&lat=${latitude}&lon=${longitude}&format=json`
-    ).then((response) => response.json());
-    const cityName = addressObj?.address?.city || "Unknown City";
+    // fetch needed data from apis
+    const weather = await fetchWeather(latitude, longitude);
+    const cityName = await fetchCity(latitude, longitude);
 
     // Elements in page
     const dateElem = document.getElementById("date");
@@ -41,6 +28,28 @@ const getCoords = async () => {
     locationElem.innerText = cityName;
   };
   navigator.geolocation.getCurrentPosition(success);
+};
+
+const fetchWeather = async (latitude, longitude) => {
+  const weatherObj = await fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIkey}`
+  ).then((response) => response.json());
+  const weatherConditions = weatherObj.weather.map((condition) => ({
+    title: condition.main,
+    description: condition.description,
+  }));
+  return {
+    temperature: weatherObj.main.temp,
+    conditions: weatherConditions,
+  };
+};
+
+const fetchCity = async (latitude, longitude) => {
+  const addressObj = await fetch(
+    `https://us1.locationiq.com/v1/reverse?key=${geoCodingKey}&lat=${latitude}&lon=${longitude}&format=json`
+  ).then((response) => response.json());
+  const cityName = addressObj?.address?.city || "Unknown City";
+  return cityName;
 };
 
 const kelvinToCelcius = (temperature) => temperature - 273.15;
