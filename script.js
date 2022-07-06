@@ -25,7 +25,6 @@ const getCoords = async () => {
       `https://us1.locationiq.com/v1/reverse?key=${geoCodingKey}&lat=${latitude}&lon=${longitude}&format=json`
     ).then((response) => response.json());
     const cityName = addressObj?.address?.city || "Unknown City";
-    console.log("addressJson", addressObj);
 
     // Elements in page
     const dateElem = document.getElementById("date");
