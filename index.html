@@ -9,21 +9,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app"></div>
-    <script>getCoords()</script>
-
+  <div class="language">
+    <select name="" id="language">
+      <option value="slovak" default>Slovak</option>
+      <option value="english">English</option>
+      <option value="dutch">Dutch</option>
+    </select>
+  </div>
     <div class='box'>
         <div class='wave -one'></div>
-        <!-- <div class='wave -two'></div>
-        <div class='wave -three'></div> -->
+        <div class='wave -two'></div>
+        <div class='wave -three'></div>
         <div class="weathercon"><i class='fas fa-sun' style='color: #d36326;'></i></div>
         <div class="info">
-          <h2 class="location">SUNNYVILLE</h2>
-          <p class="date">MONDAY | SEP 12 | 12:34</p>
-          <h1 class="temp">25 &deg;C</h1>
+          <h2 id="location" class="location">SUNNYVILLE</h2>
+          <p  id="date" class="date">MONDAY | SEP 12 | 12:34</p>
+          <h1 id="temperature" class="temp" >25 &deg;C</h1>
+          <h2 id="conditions" class="conditions">Sunny</h2>
         </div>
       </div>
       <span>Enable location to see yours! :)</span>
 
+    <script>
+    main()
+    </script>
 </body>
 </html>
